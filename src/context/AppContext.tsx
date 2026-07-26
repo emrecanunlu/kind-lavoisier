@@ -41,9 +41,9 @@ const defaultSettings: AppSettings = {
   partnerName: "Bitanem",
   passcode: "1402",
   isPasscodeEnabled: true,
-  reunionDate: "2026-08-15T18:00",
-  anniversaryDate: "2025-10-14T00:00",
-  birthdayDate: "2026-09-20T00:00",
+  reunionDate: "2026-08-15",
+  anniversaryDate: "2025-10-14",
+  birthdayDate: "2026-09-20",
   userCity: "İstanbul",
   partnerCity: "İzmir",
   distanceKm: 0,
@@ -210,7 +210,15 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       const savedUnlocked = localStorage.getItem("love_unlocked");
       const savedLastClaim = localStorage.getItem("love_last_coupon_time");
 
-      if (savedSettings) setSettings(JSON.parse(savedSettings));
+      if (savedSettings) {
+        const parsed = JSON.parse(savedSettings);
+        setSettings({
+          ...parsed,
+          reunionDate: parsed.reunionDate ? parsed.reunionDate.slice(0, 10) : defaultSettings.reunionDate,
+          anniversaryDate: parsed.anniversaryDate ? parsed.anniversaryDate.slice(0, 10) : defaultSettings.anniversaryDate,
+          birthdayDate: parsed.birthdayDate ? parsed.birthdayDate.slice(0, 10) : defaultSettings.birthdayDate,
+        });
+      }
       if (savedMemories) setMemories(JSON.parse(savedMemories));
       
       if (savedCoupons) {
@@ -219,7 +227,6 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
           const defaultLock = c.id === "c3" ? 14 : c.id === "c4" ? 3 : 7;
           const days = c.lockDays || defaultLock;
 
-          // Clean legacy 2026-08-02 or reunion date strings from localStorage
           if (c.lockedUntil && (c.lockedUntil.includes("2026-08-02") || c.lockedUntil.includes(defaultSettings.reunionDate.slice(0, 10)))) {
             return {
               ...c,
@@ -276,6 +283,61 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       console.error("Error saving to localStorage", e);
     }
   }, [settings, memories, coupons, bucketList, notes, notifications, isUnlocked, lastCouponClaimedTime, isLoaded]);
+
+  // ── Cross-Tab Sync via localStorage 'storage' event ──
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const handleStorageChange = (e: StorageEvent) => {
+      if (!e.key || !e.newValue) return;
+
+      try {
+        switch (e.key) {
+          case "love_notes": {
+            const newNotes: LoveNote[] = JSON.parse(e.newValue);
+            const currentIds = new Set(notes.map((n) => n.id));
+            const addedNotes = newNotes.filter((n) => !currentIds.has(n.id));
+            setNotes(newNotes);
+            // Show toast for new notes from another tab
+            if (addedNotes.length > 0) {
+              const latest = addedNotes[0];
+              const toast: LoveNotification = {
+                id: generateUniqueId("cross-tab"),
+                title: "Yeni Sevgi Notu Bırakıldı 💌",
+                message: `${latest.sender}: "${latest.text}"`,
+                timestamp: "Şimdi",
+                type: "note",
+                read: false,
+              };
+              setActiveToast(toast);
+              setTimeout(() => setActiveToast((curr) => (curr?.id === toast.id ? null : curr)), 4500);
+            }
+            break;
+          }
+          case "love_notifications":
+            setNotifications(JSON.parse(e.newValue));
+            break;
+          case "love_coupons":
+            setCoupons(JSON.parse(e.newValue));
+            break;
+          case "love_bucketlist":
+            setBucketList(JSON.parse(e.newValue));
+            break;
+          case "love_memories":
+            setMemories(JSON.parse(e.newValue));
+            break;
+          case "love_settings":
+            setSettings(JSON.parse(e.newValue));
+            break;
+        }
+      } catch (err) {
+        console.error("Cross-tab sync error:", err);
+      }
+    };
+
+    window.addEventListener("storage", handleStorageChange);
+    return () => window.removeEventListener("storage", handleStorageChange);
+  }, [notes]);
 
   const triggerNativeOSNotification = (title: string, body: string) => {
     if (typeof window === "undefined") return;
@@ -404,8 +466,6 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
     const willClaim = !targetCoupon.isClaimed;
     const lockDays = targetCoupon.lockDays || (targetCoupon.id === "c3" ? 14 : targetCoupon.id === "c4" ? 3 : 7);
-    
-    // Always compute exact new expiration date from NOW when claiming
     const newExpireIso = new Date(now + lockDays * 24 * 60 * 60 * 1000).toISOString();
 
     if (willClaim) {

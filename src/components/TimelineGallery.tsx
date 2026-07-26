@@ -63,7 +63,7 @@ export const TimelineGallery: React.FC = () => {
           <div className="flex items-center gap-2 bg-slate-900/60 p-1.5 rounded-full border border-rose-500/20">
             <button
               onClick={() => setViewMode("polaroid")}
-              className={`relative flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-semibold transition-colors z-10 ${
+              className={`relative flex items-center min-h-[44px] gap-1.5 px-4 py-2.5 rounded-full text-xs font-semibold transition-colors z-10 ${
                 viewMode === "polaroid" ? "text-white" : "text-rose-300/70 hover:text-white"
               }`}
             >
@@ -78,7 +78,7 @@ export const TimelineGallery: React.FC = () => {
 
             <button
               onClick={() => setViewMode("timeline")}
-              className={`relative flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-semibold transition-colors z-10 ${
+              className={`relative flex items-center min-h-[44px] gap-1.5 px-4 py-2.5 rounded-full text-xs font-semibold transition-colors z-10 ${
                 viewMode === "timeline" ? "text-white" : "text-rose-300/70 hover:text-white"
               }`}
             >
@@ -96,7 +96,7 @@ export const TimelineGallery: React.FC = () => {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             onClick={() => setIsAddModalOpen(true)}
-            className="flex items-center gap-2 bg-rose-500/20 hover:bg-rose-500/30 border border-rose-500/40 text-rose-200 text-xs px-4 py-2.5 rounded-full font-semibold transition-colors"
+            className="flex items-center gap-2 bg-rose-500/20 hover:bg-rose-500/30 border border-rose-500/40 text-rose-200 min-h-[44px] text-xs px-4 py-2.5 rounded-full font-semibold transition-colors"
           >
             <Plus className="w-4 h-4 text-pink-400" />
             <span>Yeni Anı Ekle</span>
@@ -135,7 +135,7 @@ export const TimelineGallery: React.FC = () => {
                       className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                     />
                     {item.tag && (
-                      <span className="absolute top-2 left-2 bg-rose-500/90 text-white text-[10px] font-bold px-2 py-0.5 rounded shadow-md">
+                      <span className="absolute top-2 left-2 bg-rose-500/90 text-white text-xs font-bold px-2 py-0.5 rounded shadow-md">
                         {item.tag}
                       </span>
                     )}
@@ -148,7 +148,7 @@ export const TimelineGallery: React.FC = () => {
                     <p className="text-xs text-slate-600 line-clamp-2 mb-2 font-sans">
                       {item.description}
                     </p>
-                    <div className="flex items-center justify-between text-[11px] text-slate-500 pt-2 border-t border-slate-200 font-sans">
+                    <div className="flex items-center justify-between text-xs text-slate-500 pt-2 border-t border-slate-200 font-sans">
                       <span className="flex items-center gap-1">
                         <Calendar className="w-3 h-3 text-rose-500" /> {item.date}
                       </span>
@@ -188,7 +188,7 @@ export const TimelineGallery: React.FC = () => {
 
                 <div
                   onClick={() => setSelectedMemory(item)}
-                  className="bg-slate-900/60 border border-rose-500/20 rounded-2xl p-4 sm:p-5 hover:border-rose-500/40 transition-all backdrop-blur-md cursor-pointer hover:shadow-xl hover:-translate-y-0.5"
+                  className="bg-slate-950/90 border border-rose-500/20 rounded-2xl p-4 sm:p-5 hover:border-rose-500/40 transition-all cursor-pointer hover:shadow-xl hover:-translate-y-0.5"
                 >
                   <div className="flex flex-col sm:flex-row gap-4">
                     {item.imageUrl && (
@@ -234,7 +234,7 @@ export const TimelineGallery: React.FC = () => {
               >
                 <button
                   onClick={() => setSelectedMemory(null)}
-                  className="absolute top-4 right-4 text-rose-300 hover:text-white p-2 rounded-full bg-slate-800/60 z-10"
+                  className="absolute top-4 right-4 text-rose-300 hover:text-white p-2.5 min-w-[44px] min-h-[44px] flex items-center justify-center rounded-full bg-slate-800/60 z-10"
                 >
                   <X className="w-5 h-5" />
                 </button>
@@ -271,13 +271,13 @@ export const TimelineGallery: React.FC = () => {
                       deleteMemory(selectedMemory.id);
                       setSelectedMemory(null);
                     }}
-                    className="flex items-center gap-1.5 text-xs text-red-400 hover:text-red-300 transition-colors"
+                    className="flex items-center gap-1.5 min-h-[44px] text-xs text-red-400 hover:text-red-300 transition-colors"
                   >
                     <Trash2 className="w-4 h-4" /> Anıyı Sil
                   </button>
                   <button
                     onClick={() => setSelectedMemory(null)}
-                    className="bg-rose-500 hover:bg-rose-600 text-white font-semibold text-xs px-5 py-2 rounded-full transition-colors"
+                    className="bg-rose-500 hover:bg-rose-600 text-white font-semibold min-h-[44px] text-xs px-5 py-2 rounded-full transition-colors"
                   >
                     Kapat
                   </button>
@@ -299,7 +299,7 @@ export const TimelineGallery: React.FC = () => {
               >
                 <button
                   onClick={() => setIsAddModalOpen(false)}
-                  className="absolute top-4 right-4 text-rose-300 hover:text-white"
+                  className="absolute top-4 right-4 text-rose-300 hover:text-white p-2.5 min-w-[44px] min-h-[44px] flex items-center justify-center"
                 >
                   <X className="w-5 h-5" />
                 </button>
@@ -319,7 +319,7 @@ export const TimelineGallery: React.FC = () => {
                       placeholder="Örn: İlk Tatilimiz"
                       value={newTitle}
                       onChange={(e) => setNewTitle(e.target.value)}
-                      className="w-full bg-slate-950 border border-rose-500/30 rounded-xl px-3.5 py-2 text-sm text-white focus:outline-none focus:border-rose-400"
+                      className="w-full bg-slate-950 border border-rose-500/30 rounded-xl min-h-[44px] px-3.5 py-2 text-sm text-white focus:outline-none focus:border-rose-400"
                     />
                   </div>
 
@@ -333,7 +333,7 @@ export const TimelineGallery: React.FC = () => {
                         placeholder="Örn: 15 Ağustos 2025"
                         value={newDate}
                         onChange={(e) => setNewDate(e.target.value)}
-                        className="w-full bg-slate-950 border border-rose-500/30 rounded-xl px-3.5 py-2 text-sm text-white focus:outline-none focus:border-rose-400"
+                        className="w-full bg-slate-950 border border-rose-500/30 rounded-xl min-h-[44px] px-3.5 py-2 text-sm text-white focus:outline-none focus:border-rose-400"
                       />
                     </div>
                     <div>
@@ -345,7 +345,7 @@ export const TimelineGallery: React.FC = () => {
                         placeholder="Örn: İzmir Sahili"
                         value={newLocation}
                         onChange={(e) => setNewLocation(e.target.value)}
-                        className="w-full bg-slate-950 border border-rose-500/30 rounded-xl px-3.5 py-2 text-sm text-white focus:outline-none focus:border-rose-400"
+                        className="w-full bg-slate-950 border border-rose-500/30 rounded-xl min-h-[44px] px-3.5 py-2 text-sm text-white focus:outline-none focus:border-rose-400"
                       />
                     </div>
                   </div>
@@ -359,7 +359,7 @@ export const TimelineGallery: React.FC = () => {
                       placeholder="https://..."
                       value={newImageUrl}
                       onChange={(e) => setNewImageUrl(e.target.value)}
-                      className="w-full bg-slate-950 border border-rose-500/30 rounded-xl px-3.5 py-2 text-sm text-white focus:outline-none focus:border-rose-400"
+                      className="w-full bg-slate-950 border border-rose-500/30 rounded-xl min-h-[44px] px-3.5 py-2 text-sm text-white focus:outline-none focus:border-rose-400"
                     />
                   </div>
 
@@ -373,7 +373,7 @@ export const TimelineGallery: React.FC = () => {
                       placeholder="O güne dair duygularınız ve notunuz..."
                       value={newDesc}
                       onChange={(e) => setNewDesc(e.target.value)}
-                      className="w-full bg-slate-950 border border-rose-500/30 rounded-xl px-3.5 py-2 text-sm text-white focus:outline-none focus:border-rose-400"
+                      className="w-full bg-slate-950 border border-rose-500/30 rounded-xl min-h-[44px] px-3.5 py-2 text-sm text-white focus:outline-none focus:border-rose-400"
                     />
                   </div>
 
@@ -381,13 +381,13 @@ export const TimelineGallery: React.FC = () => {
                     <button
                       type="button"
                       onClick={() => setIsAddModalOpen(false)}
-                      className="px-4 py-2 rounded-full text-xs text-rose-300 hover:text-white"
+                      className="min-h-[44px] px-4 py-2 rounded-full text-xs text-rose-300 hover:text-white"
                     >
                       İptal
                     </button>
                     <button
                       type="submit"
-                      className="bg-gradient-to-r from-rose-500 to-pink-500 text-white font-semibold text-xs px-6 py-2 rounded-full shadow-lg hover:scale-105 transition-transform"
+                      className="bg-gradient-to-r from-rose-500 to-pink-500 text-white font-semibold min-h-[44px] text-xs px-6 py-2 rounded-full shadow-lg hover:scale-105 transition-transform"
                     >
                       Anıyı Kaydet
                     </button>

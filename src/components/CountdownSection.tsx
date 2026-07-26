@@ -65,7 +65,7 @@ export const CountdownSection: React.FC = () => {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-50px" }}
         transition={{ duration: 0.6 }}
-        className="max-w-4xl mx-auto bg-slate-900/70 border border-rose-500/30 rounded-3xl p-5 sm:p-10 backdrop-blur-xl shadow-2xl"
+        className="max-w-4xl mx-auto bg-slate-900/90 border border-rose-500/30 rounded-3xl p-5 sm:p-10 shadow-2xl"
       >
         {/* Section Header */}
         <div className="text-center mb-6 sm:mb-8">
@@ -84,7 +84,7 @@ export const CountdownSection: React.FC = () => {
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
-              className="relative flex-1 py-2 px-2 sm:px-4 rounded-full text-[11px] sm:text-xs font-semibold transition-colors z-10 text-rose-200"
+              className="relative flex-1 min-h-[44px] py-2.5 px-3 sm:px-4 rounded-full text-xs font-semibold transition-colors z-10 text-rose-200"
             >
               {activeTab === tab && (
                 <motion.div
@@ -133,7 +133,7 @@ export const CountdownSection: React.FC = () => {
                 <div className="text-3xl sm:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-b from-white via-rose-100 to-rose-300 mb-1 font-mono">
                   {String(item.value).padStart(2, "0")}
                 </div>
-                <div className="text-[10px] sm:text-xs font-bold text-rose-300/70 tracking-widest">
+                <div className="text-xs font-bold text-rose-300/70 tracking-widest">
                   {item.label}
                 </div>
               </motion.div>
@@ -151,12 +151,12 @@ export const CountdownSection: React.FC = () => {
               <div className="text-xs sm:text-sm font-semibold text-rose-100">
                 {settings.userName} & {settings.partnerName} Sevgi Bağı
               </div>
-              <div className="text-[11px] sm:text-xs text-rose-300/70">
+              <div className="text-xs text-rose-300/70">
                 Aşkımız, mutluluğumuz ve ortak hayallerimiz her geçen gün daha da büyüyor!
               </div>
             </div>
           </div>
-          <div className="flex items-center gap-1.5 text-[11px] sm:text-xs text-rose-200 bg-rose-500/10 px-3 py-1.5 rounded-full border border-rose-500/20 shrink-0">
+          <div className="flex items-center gap-1.5 text-xs text-rose-200 bg-rose-500/10 px-3 py-1.5 rounded-full border border-rose-500/20 shrink-0">
             <Heart className="w-3.5 h-3.5 text-rose-400 fill-rose-400 animate-pulse" />
             <span>Sonsuz Sevgi Bağlantısı</span>
           </div>

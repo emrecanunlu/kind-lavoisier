@@ -53,13 +53,13 @@ export const SealedLetter: React.FC = () => {
                 <div className="absolute top-0 left-0 right-0 h-28 sm:h-32 bg-amber-200/80 rounded-t-xl border-b-2 border-amber-300/60 pointer-events-none"></div>
 
                 <div className="relative z-10 py-8 sm:py-12 flex flex-col items-center">
-                  <div className="text-[11px] sm:text-xs font-serif text-amber-900/60 tracking-widest uppercase mb-1">
+                  <div className="text-xs font-serif text-amber-900/60 tracking-widest uppercase mb-1">
                     Özel Mektubum ❤️
                   </div>
                   <div className="text-xl sm:text-2xl font-serif font-bold text-amber-950 mb-1">
                     Sayın {settings.partnerName}
                   </div>
-                  <div className="text-[11px] sm:text-xs text-amber-900/70 italic mb-6">
+                  <div className="text-xs text-amber-900/70 italic mb-6">
                     Sadece Sana Özel (Sevgiyle Hazırlandı)
                   </div>
 
@@ -80,7 +80,7 @@ export const SealedLetter: React.FC = () => {
                     >
                       <Heart className="w-7 h-7 sm:w-9 sm:h-9 text-rose-100 fill-rose-100" />
                     </motion.div>
-                    <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 whitespace-nowrap text-[10px] sm:text-[11px] font-bold text-amber-950 bg-amber-200/90 px-3 py-1 rounded-full shadow-md border border-amber-400">
+                    <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 whitespace-nowrap text-xs font-bold text-amber-950 bg-amber-200/90 px-3 py-1.5 rounded-full shadow-md border border-amber-400">
                       Mühüre Tıkla & Oku ✉️
                     </div>
                   </div>
@@ -105,8 +105,8 @@ export const SealedLetter: React.FC = () => {
               {/* Close Button */}
               <button
                 onClick={() => setIsOpen(false)}
-                className="absolute top-4 right-4 sm:top-6 sm:right-6 text-slate-400 hover:text-slate-700 p-2 rounded-full hover:bg-amber-200/50 transition-colors"
-                title="Zarfı Kapat"
+                aria-label="Zarfı Kapat"
+                className="absolute top-3 right-3 sm:top-6 sm:right-6 text-slate-400 hover:text-slate-700 p-2.5 rounded-full hover:bg-amber-200/50 transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center"
               >
                 <X className="w-5 h-5" />
               </button>

@@ -76,7 +76,7 @@ export const PasscodeLock: React.FC = () => {
           <h2 className="text-xl sm:text-3xl font-serif font-bold tracking-tight bg-gradient-to-r from-rose-200 via-pink-200 to-rose-300 bg-clip-text text-transparent mb-1 sm:mb-2">
             Özel Dünyamız 🔒
           </h2>
-          <p className="text-rose-200/70 text-[11px] sm:text-sm mb-4 sm:mb-6 flex items-center justify-center gap-1">
+          <p className="text-rose-200/70 text-xs sm:text-sm mb-4 sm:mb-6 flex items-center justify-center gap-1">
             <Sparkles className="w-3.5 h-3.5 text-rose-400 shrink-0" />
             İçeriği görmek için gizli şifreyi giriniz ❤️
           </p>
@@ -100,7 +100,7 @@ export const PasscodeLock: React.FC = () => {
             <motion.p
               initial={{ opacity: 0, y: -5 }}
               animate={{ opacity: 1, y: 0 }}
-              className="text-[11px] sm:text-xs text-rose-400 bg-rose-900/50 py-1.5 px-3 rounded-full mb-4 inline-block border border-rose-500/40 font-semibold"
+              className="text-xs sm:text-xs text-rose-400 bg-rose-900/50 py-2 px-3.5 rounded-full mb-4 inline-block border border-rose-500/40 font-semibold"
             >
               Hatalı şifre! Lütfen tekrar deneyiniz.
             </motion.p>
@@ -139,7 +139,7 @@ export const PasscodeLock: React.FC = () => {
             </motion.button>
           </div>
 
-          <div className="pt-3 border-t border-white/5 flex items-center justify-center gap-1.5 text-[10px] sm:text-[11px] text-rose-300/60 font-mono">
+          <div className="pt-3 border-t border-white/5 flex items-center justify-center gap-1.5 text-xs text-rose-300/60 font-mono">
             <ShieldCheck className="w-3.5 h-3.5 text-pink-400 shrink-0" /> Tam Güvenlikli Erişim Koruması
           </div>
         </motion.div>

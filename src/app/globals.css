@@ -9,10 +9,27 @@
 
   body {
     font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    /* Prevent iOS auto-zoom on input focus */
+    touch-action: manipulation;
+  }
+
+  /* Prevent iOS Safari from zooming into inputs with font-size < 16px */
+  input, select, textarea {
+    font-size: 16px;
   }
 
   h1, h2, h3, .font-serif {
     font-family: var(--font-serif);
+  }
+
+  /* Reduce motion on mobile for better performance */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
   }
 }
 
@@ -31,7 +48,14 @@
   animation: fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-/* Glassmorphism utilities */
-.backdrop-blur-xl {
-  backdrop-filter: blur(24px);
+/* Scrollbar styling for drawer panels */
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(244, 63, 94, 0.3);
+  border-radius: 4px;
 }

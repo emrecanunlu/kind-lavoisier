@@ -80,7 +80,7 @@ export const CouponsBucketList: React.FC = () => {
                   viewport={{ once: true }}
                   transition={{ delay: idx * 0.08 }}
                   whileHover={{ y: -4 }}
-                  className={`relative bg-slate-900/70 border rounded-3xl p-5 sm:p-6 backdrop-blur-xl transition-colors flex flex-col justify-between overflow-hidden ${
+                  className={`relative bg-slate-900/90 border rounded-3xl p-5 sm:p-6 transition-colors flex flex-col justify-between overflow-hidden ${
                     coupon.isClaimed
                       ? "border-rose-500/50 bg-rose-950/20"
                       : "border-rose-500/20 hover:border-rose-500/40"
@@ -99,7 +99,7 @@ export const CouponsBucketList: React.FC = () => {
                         <motion.span
                           initial={{ scale: 0.8 }}
                           animate={{ scale: 1 }}
-                          className="flex items-center gap-1 bg-rose-950 border border-rose-500/50 text-rose-200 text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full shadow-md"
+                          className="flex items-center gap-1 bg-rose-950 border border-rose-500/50 text-rose-200 text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded-full shadow-md"
                         >
                           <Lock className="w-3 h-3 text-pink-400" />
                           <span>Kullanıldı & Kilitli</span>
@@ -116,7 +116,7 @@ export const CouponsBucketList: React.FC = () => {
                   </div>
 
                   <div className="pt-4 border-t border-rose-500/20 flex flex-col gap-2">
-                    <div className="flex items-center justify-between text-[11px] text-rose-300/60 font-mono">
+                    <div className="flex items-center justify-between text-xs text-rose-300/60 font-mono">
                       {coupon.isClaimed && lockExpireFormatted ? (
                         <span className="flex items-center gap-1 text-pink-300/90 font-sans font-semibold">
                           <RefreshCw className="w-3 h-3 text-pink-400 animate-spin-slow" /> Yeniden Talep Tarihi: {lockExpireFormatted}
@@ -129,7 +129,7 @@ export const CouponsBucketList: React.FC = () => {
                     <motion.button
                       whileTap={{ scale: 0.95 }}
                       onClick={() => handleClaimCoupon(coupon.id, coupon.isClaimed)}
-                      className={`w-full py-2.5 rounded-full text-xs font-semibold transition-all flex items-center justify-center gap-1.5 ${
+                      className={`w-full min-h-[44px] py-2.5 rounded-full text-xs font-semibold transition-all flex items-center justify-center gap-1.5 ${
                         coupon.isClaimed
                           ? "bg-slate-950/80 border border-rose-500/30 text-rose-300/70 cursor-not-allowed"
                           : "bg-gradient-to-r from-rose-500 to-pink-500 text-white shadow-lg shadow-rose-500/30 hover:scale-105"
@@ -172,7 +172,7 @@ export const CouponsBucketList: React.FC = () => {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="max-w-3xl mx-auto bg-slate-900/70 border border-rose-500/30 rounded-3xl p-5 sm:p-8 backdrop-blur-xl shadow-2xl"
+            className="max-w-3xl mx-auto bg-slate-900/90 border border-rose-500/30 rounded-3xl p-5 sm:p-8 shadow-2xl"
           >
             {/* Progress Bar Header */}
             <div className="mb-6 sm:mb-8">
@@ -217,7 +217,7 @@ export const CouponsBucketList: React.FC = () => {
                     </div>
 
                     <div className="flex items-center gap-2 shrink-0">
-                      <span className="text-[10px] bg-rose-500/10 text-rose-300 border border-rose-500/20 px-2.5 py-1 rounded-full font-semibold">
+                      <span className="text-xs bg-rose-500/10 text-rose-300 border border-rose-500/20 px-2.5 py-1 rounded-full font-semibold">
                         {item.category}
                       </span>
                       <button
@@ -225,9 +225,9 @@ export const CouponsBucketList: React.FC = () => {
                           e.stopPropagation();
                           deleteBucketListItem(item.id);
                         }}
-                        className="text-rose-400/40 hover:text-red-400 p-1.5 transition-colors"
+                        className="text-rose-400/40 hover:text-red-400 p-2.5 min-w-[44px] min-h-[44px] flex items-center justify-center transition-colors"
                       >
-                        <Trash2 className="w-3.5 h-3.5" />
+                        <Trash2 className="w-4 h-4" />
                       </button>
                     </div>
                   </motion.div>
@@ -242,7 +242,7 @@ export const CouponsBucketList: React.FC = () => {
                 placeholder="Yeni bir hayal ekle..."
                 value={newPlanTitle}
                 onChange={(e) => setNewPlanTitle(e.target.value)}
-                className="flex-1 bg-slate-950 border border-rose-500/30 rounded-full px-4 py-2.5 text-xs sm:text-sm text-white focus:outline-none focus:border-rose-400"
+                className="flex-1 bg-slate-950 border border-rose-500/30 rounded-full min-h-[44px] px-4 py-2.5 text-xs sm:text-sm text-white focus:outline-none focus:border-rose-400"
               />
 
               {/* Styled Dropdown Selector */}
@@ -250,7 +250,7 @@ export const CouponsBucketList: React.FC = () => {
                 <select
                   value={newPlanCategory}
                   onChange={(e) => setNewPlanCategory(e.target.value)}
-                  className="w-full appearance-none bg-slate-950 border border-rose-500/30 rounded-full pl-4 pr-9 py-2.5 text-xs font-semibold text-rose-200 focus:outline-none focus:border-rose-400 cursor-pointer shadow-sm"
+                  className="w-full appearance-none bg-slate-950 border border-rose-500/30 rounded-full min-h-[44px] pl-4 pr-9 py-2.5 text-xs font-semibold text-rose-200 focus:outline-none focus:border-rose-400 cursor-pointer shadow-sm"
                 >
                   <option value="Romantik" className="bg-slate-900 text-white py-1">Romantik</option>
                   <option value="Seyahat" className="bg-slate-900 text-white py-1">Seyahat</option>
@@ -262,7 +262,7 @@ export const CouponsBucketList: React.FC = () => {
 
               <button
                 type="submit"
-                className="bg-gradient-to-r from-rose-500 to-pink-500 text-white px-6 py-2.5 rounded-full text-xs font-semibold shadow-lg hover:scale-105 transition-transform flex items-center justify-center gap-1 shrink-0"
+                className="bg-gradient-to-r from-rose-500 to-pink-500 text-white min-h-[44px] px-6 py-2.5 rounded-full text-xs font-semibold shadow-lg hover:scale-105 transition-transform flex items-center justify-center gap-1 shrink-0"
               >
                 <Plus className="w-4 h-4" />
                 <span>Ekle</span>

@@ -40,7 +40,7 @@ export const LoveNotesSection: React.FC = () => {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="bg-slate-900/70 border border-rose-500/30 rounded-3xl p-5 sm:p-8 backdrop-blur-xl shadow-2xl mb-10"
+          className="bg-slate-900/90 border border-rose-500/30 rounded-3xl p-5 sm:p-8 shadow-2xl mb-10"
         >
           <h3 className="text-lg font-serif font-bold text-white mb-3 flex items-center gap-2">
             <Sparkles className="w-4 h-4 text-pink-400" />
@@ -54,19 +54,19 @@ export const LoveNotesSection: React.FC = () => {
               placeholder="Aklından geçen tatlı bir not yaz..."
               value={noteText}
               onChange={(e) => setNoteText(e.target.value)}
-              className="w-full bg-slate-950 border border-rose-500/30 rounded-2xl p-4 text-xs sm:text-sm text-white focus:outline-none focus:border-rose-400 font-sans resize-none"
+              className="w-full bg-slate-950 border border-rose-500/30 rounded-2xl min-h-[44px] p-4 text-xs sm:text-sm text-white focus:outline-none focus:border-rose-400 font-sans resize-none"
             />
 
             <div className="flex flex-wrap items-center justify-between gap-3">
               {/* Emoji Picker */}
               <div className="flex items-center gap-1.5 bg-slate-950 p-1.5 rounded-full border border-rose-500/20">
-                <span className="text-[11px] text-rose-300/70 pl-2 font-medium">İfade:</span>
+                <span className="text-xs text-rose-300/70 pl-2 font-medium">İfade:</span>
                 {emojis.map((emoji) => (
                   <button
                     key={emoji}
                     type="button"
                     onClick={() => setSelectedEmoji(emoji)}
-                    className={`w-7 h-7 rounded-full text-xs flex items-center justify-center transition-all ${
+                    className={`w-10 h-10 rounded-full text-base flex items-center justify-center transition-all ${
                       selectedEmoji === emoji
                         ? "bg-rose-500/30 border border-rose-400 scale-110 shadow-sm"
                         : "hover:bg-slate-800"
@@ -82,7 +82,7 @@ export const LoveNotesSection: React.FC = () => {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 type="submit"
-                className="bg-gradient-to-r from-rose-500 to-pink-500 text-white font-semibold text-xs px-6 py-2.5 rounded-full shadow-lg flex items-center gap-2 transition-transform ml-auto"
+                className="bg-gradient-to-r from-rose-500 to-pink-500 text-white font-semibold min-h-[44px] text-xs px-6 py-2.5 rounded-full shadow-lg flex items-center gap-2 transition-transform ml-auto"
               >
                 <Send className="w-3.5 h-3.5" />
                 <span>Notu Gönder</span>
@@ -100,7 +100,7 @@ export const LoveNotesSection: React.FC = () => {
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.9 }}
-                className="relative bg-slate-900/60 border border-rose-500/20 rounded-2xl p-5 backdrop-blur-md shadow-lg flex flex-col justify-between"
+                className="relative bg-slate-900/90 border border-rose-500/20 rounded-2xl p-5 shadow-lg flex flex-col justify-between"
               >
                 <div className="flex items-start justify-between gap-2 mb-3">
                   <div className="flex items-center gap-2">
@@ -109,7 +109,7 @@ export const LoveNotesSection: React.FC = () => {
                   </div>
                   <button
                     onClick={() => deleteNote(note.id)}
-                    className="text-rose-400/40 hover:text-red-400 p-1 transition-colors"
+                    className="text-rose-400/40 hover:text-red-400 p-2.5 min-w-[44px] min-h-[44px] flex items-center justify-center transition-colors"
                   >
                     <Trash2 className="w-3.5 h-3.5" />
                   </button>
@@ -119,7 +119,7 @@ export const LoveNotesSection: React.FC = () => {
                   "{note.text}"
                 </p>
 
-                <div className="text-[10px] text-rose-300/50 font-mono text-right border-t border-rose-500/10 pt-2">
+                <div className="text-xs text-rose-300/50 font-mono text-right border-t border-rose-500/10 pt-2">
                   {note.date}
                 </div>
               </motion.div>

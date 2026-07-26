@@ -8,8 +8,12 @@ export const FloatingHeartsCanvas: React.FC = () => {
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-    const ctx = canvas.getContext("2d");
+    const ctx = canvas.getContext("2d", { alpha: true });
     if (!ctx) return;
+
+    // Detect mobile device to drastically optimize particle count & FPS load
+    const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
+    const particleCount = isMobile ? 10 : 24;
 
     let animationFrameId: number;
     let width = (canvas.width = window.innerWidth);
@@ -30,25 +34,22 @@ export const FloatingHeartsCanvas: React.FC = () => {
       speedY: number;
       speedX: number;
       opacity: number;
-      growth: number;
       color: string;
     }
 
     const colors = [
       "rgba(244, 63, 94, ",  // rose-500
       "rgba(236, 72, 153, ", // pink-500
-      "rgba(219, 39, 119, ", // pink-600
       "rgba(251, 113, 133, ",// rose-400
     ];
 
-    const particles: HeartParticle[] = Array.from({ length: 32 }, () => ({
+    const particles: HeartParticle[] = Array.from({ length: particleCount }, () => ({
       x: Math.random() * width,
       y: Math.random() * height,
-      size: Math.random() * 14 + 6,
-      speedY: -(Math.random() * 0.8 + 0.3),
-      speedX: Math.sin(Math.random() * Math.PI) * 0.5 - 0.25,
-      opacity: Math.random() * 0.5 + 0.2,
-      growth: Math.random() * 0.005,
+      size: Math.random() * 10 + 6,
+      speedY: -(Math.random() * 0.5 + 0.2),
+      speedX: Math.sin(Math.random() * Math.PI) * 0.3 - 0.15,
+      opacity: Math.random() * 0.4 + 0.2,
       color: colors[Math.floor(Math.random() * colors.length)],
     }));
 
@@ -58,53 +59,32 @@ export const FloatingHeartsCanvas: React.FC = () => {
       ctx.fillStyle = color + opacity + ")";
       const topCurveHeight = size * 0.3;
       ctx.moveTo(x, y + topCurveHeight);
-      // top left curve
-      ctx.bezierCurveTo(
-        x,
-        y,
-        x - size / 2,
-        y,
-        x - size / 2,
-        y + topCurveHeight
-      );
-      // bottom left curve
-      ctx.bezierCurveTo(
-        x - size / 2,
-        y + (size + topCurveHeight) / 2,
-        x,
-        y + size,
-        x,
-        y + size
-      );
-      // bottom right curve
-      ctx.bezierCurveTo(
-        x,
-        y + size,
-        x + size / 2,
-        y + (size + topCurveHeight) / 2,
-        x + size / 2,
-        y + topCurveHeight
-      );
-      // top right curve
-      ctx.bezierCurveTo(
-        x + size / 2,
-        y,
-        x,
-        y,
-        x,
-        y + topCurveHeight
-      );
+      ctx.bezierCurveTo(x, y, x - size / 2, y, x - size / 2, y + topCurveHeight);
+      ctx.bezierCurveTo(x - size / 2, y + (size + topCurveHeight) / 2, x, y + size, x, y + size);
+      ctx.bezierCurveTo(x, y + size, x + size / 2, y + (size + topCurveHeight) / 2, x + size / 2, y + topCurveHeight);
+      ctx.bezierCurveTo(x + size / 2, y, x, y, x, y + topCurveHeight);
       ctx.closePath();
       ctx.fill();
       ctx.restore();
     };
 
-    const animate = () => {
+    let lastTime = performance.now();
+    const targetFps = isMobile ? 30 : 60;
+    const interval = 1000 / targetFps;
+
+    const render = (currentTime: number) => {
+      animationFrameId = requestAnimationFrame(render);
+
+      const delta = currentTime - lastTime;
+      if (delta < interval) return;
+      lastTime = currentTime - (delta % interval);
+
       ctx.clearRect(0, 0, width, height);
 
-      particles.forEach((p) => {
+      for (let i = 0; i < particles.length; i++) {
+        const p = particles[i];
         p.y += p.speedY;
-        p.x += Math.sin(p.y * 0.01) * 0.5;
+        p.x += p.speedX;
 
         if (p.y < -30) {
           p.y = height + 20;
@@ -112,12 +92,10 @@ export const FloatingHeartsCanvas: React.FC = () => {
         }
 
         drawHeart(p.x, p.y, p.size, p.color, p.opacity);
-      });
-
-      animationFrameId = requestAnimationFrame(animate);
+      }
     };
 
-    animate();
+    animationFrameId = requestAnimationFrame(render);
 
     return () => {
       window.removeEventListener("resize", handleResize);
@@ -129,6 +107,7 @@ export const FloatingHeartsCanvas: React.FC = () => {
     <canvas
       ref={canvasRef}
       className="fixed inset-0 pointer-events-none z-0 opacity-60"
+      style={{ transform: "translateZ(0)" }}
     />
   );
 };
