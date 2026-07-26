@@ -81,7 +81,6 @@ export const AudioPlayer: React.FC = () => {
     scheduleChord();
   };
 
-  // Explicit Manual Play on User Gesture
   const startAudio = () => {
     const ctx = getOrCreateAudioContext();
     if (!ctx) return;
@@ -103,7 +102,6 @@ export const AudioPlayer: React.FC = () => {
     if (timerRef.current) clearTimeout(timerRef.current);
   };
 
-  // Direct On-Demand Click/Touch Handler
   const handleTogglePlay = (e: React.SyntheticEvent) => {
     e.stopPropagation();
     if (isPlaying) {
@@ -113,14 +111,6 @@ export const AudioPlayer: React.FC = () => {
     }
   };
 
-  // Update volume in real-time
-  useEffect(() => {
-    if (audioCtxRef.current) {
-      // Handled inside playNote using volume state
-    }
-  }, [volume, isMuted]);
-
-  // Safe cleanup
   useEffect(() => {
     return () => {
       isPlayingRef.current = false;
@@ -132,34 +122,34 @@ export const AudioPlayer: React.FC = () => {
   }, []);
 
   return (
-    <div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-40 flex flex-col items-end">
-      {/* Floating Manual On-Demand Music Controller */}
+    <div className="fixed bottom-3 right-3 sm:bottom-6 sm:right-6 z-40 flex flex-col items-end">
+      {/* Floating Mobile Pixel-Perfect Controller */}
       <motion.div
-        whileHover={{ scale: 1.05 }}
+        whileHover={{ scale: 1.04 }}
         whileTap={{ scale: 0.95 }}
         onClick={handleTogglePlay}
         onTouchStart={handleTogglePlay}
-        className="flex items-center gap-3 bg-slate-900/95 border-2 border-rose-500/50 text-white p-2.5 px-4 rounded-full shadow-2xl backdrop-blur-xl transition-all cursor-pointer select-none"
+        className="flex items-center gap-2.5 bg-slate-900/95 border-2 border-rose-500/50 text-white p-2 px-3.5 sm:p-2.5 sm:px-4 rounded-full shadow-2xl backdrop-blur-xl transition-all cursor-pointer select-none"
       >
         {/* Play / Pause Button */}
-        <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-rose-500 via-pink-500 to-rose-600 flex items-center justify-center text-white shadow-lg shadow-rose-500/40 shrink-0">
+        <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-gradient-to-tr from-rose-500 via-pink-500 to-rose-600 flex items-center justify-center text-white shadow-lg shadow-rose-500/40 shrink-0">
           {isPlaying ? (
-            <Pause className="w-5 h-5 text-white" />
+            <Pause className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
           ) : (
-            <Play className="w-5 h-5 text-white ml-0.5" />
+            <Play className="w-4 h-4 sm:w-5 sm:h-5 text-white ml-0.5" />
           )}
         </div>
 
         {/* Track Label & Animated Equalizer Bars */}
-        <div className="flex flex-col text-left pr-1">
-          <div className="text-xs font-serif font-bold text-rose-200 flex items-center gap-1.5">
-            <span>Derin & Relax Piyano</span>
+        <div className="flex flex-col text-left pr-0.5">
+          <div className="text-[11px] sm:text-xs font-serif font-bold text-rose-200 flex items-center gap-1">
+            <span>Romantik Piyano</span>
             <Heart className="w-3 h-3 text-rose-400 fill-rose-400 animate-pulse" />
           </div>
-          <div className="text-[10px] text-rose-300/70 font-sans flex items-center gap-1">
+          <div className="text-[10px] text-rose-300/80 font-sans flex items-center gap-1">
             {isPlaying ? (
               <>
-                <span className="text-pink-300">Piyano Çalıyor</span>
+                <span className="text-pink-300">Çalıyor</span>
                 <span className="inline-flex items-end gap-0.5 h-2.5 ml-1">
                   <span className="w-0.5 h-full bg-pink-400 animate-bounce"></span>
                   <span className="w-0.5 h-2/3 bg-pink-300 animate-bounce delay-150"></span>
@@ -172,18 +162,18 @@ export const AudioPlayer: React.FC = () => {
           </div>
         </div>
 
-        {/* Volume & Mute Controls */}
+        {/* Volume Controls */}
         {isPlaying && (
           <div
-            className="flex items-center gap-2 border-l border-rose-500/20 pl-3"
+            className="flex items-center gap-1.5 border-l border-rose-500/20 pl-2.5"
             onClick={(e) => e.stopPropagation()}
             onTouchStart={(e) => e.stopPropagation()}
           >
             <button
               onClick={() => setIsMuted(!isMuted)}
-              className="text-rose-300 hover:text-white transition-colors"
+              className="text-rose-300 hover:text-white transition-colors p-1"
             >
-              {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
+              {isMuted ? <VolumeX className="w-3.5 h-3.5" /> : <Volume2 className="w-3.5 h-3.5" />}
             </button>
             <input
               type="range"
@@ -192,7 +182,7 @@ export const AudioPlayer: React.FC = () => {
               step="0.05"
               value={volume}
               onChange={(e) => setVolume(parseFloat(e.target.value))}
-              className="w-16 accent-rose-500 h-1 bg-rose-900/60 rounded-lg cursor-pointer"
+              className="w-12 sm:w-16 accent-rose-500 h-1 bg-rose-900/60 rounded-lg cursor-pointer"
             />
           </div>
         )}
